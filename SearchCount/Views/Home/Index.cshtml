@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#submit').on('click', function () {
+            
+            var ajaxRequest = $.ajax({
+                type: "GET",
+                url: "api/count/search?searchText=" + encodeURIComponent($('#search-text').val()) + "&url=" + encodeURIComponent($('#url').val()),
+                success: function (result) {
+                    var resultString = "The target URL appears in google search results line number: " + result.join(" ");
+                    $('#result').html(resultString);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("API Error");
+                }
+
+            });
+        });
+    });
+</script>
+
+<div class="row">
+    <div class="form-row">
+        <label>Search Text</label>
+        <input id="search-text" type="text" />
+    </div>
+    <div class="form-row">
+        <label>Target URL</label>
+        <input id="url" type="text" />
+    </div>
+    <div class="form-row">
+        <input id="submit" type="submit" value="Submit"/>
+        </div>
+    <br />
+    <p id="result">The target URL appears in google search results line number: </p>
+</div>
